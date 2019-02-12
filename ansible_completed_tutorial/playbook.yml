@@ -1,0 +1,14 @@
+- hosts: all
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: Run Apache role
+      include_role:
+        name: apache
+      when: "'apache' in group_names"
+
+    - name: Run NodeJS role
+      include_role:
+        name: nodejs
+      when: "'react' in group_names"

@@ -1,0 +1,13 @@
+[Unit]
+Description=React application
+
+[Service]
+ExecStart=/usr/bin/npx serve -s /apps/react_application
+Restart=on-failure
+User=root
+Group=root
+Environment=PATH=/usr/bin:/usr/local/bin
+WorkingDirectory=/apps/react_application
+
+[Install]
+WantedBy=multi-user.target

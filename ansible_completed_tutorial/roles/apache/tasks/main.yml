@@ -1,0 +1,14 @@
+---
+- name: ensure httpd is installed by yum
+  yum:
+    name: httpd
+- name: ensure reverseproxy configuration is copied
+  copy:
+    src: etc/httpd/conf.d/
+    dest: /etc/httpd/conf.d/
+- name: ensure httpd is started
+  service:
+    name: httpd
+    enabled: yes
+    state: restarted
+

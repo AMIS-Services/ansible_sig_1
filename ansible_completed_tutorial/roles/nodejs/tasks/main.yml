@@ -1,0 +1,48 @@
+---
+- name: ensure EPEL repository is added to yum
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+- name: ensure the gpg key is imported
+  rpm_key:
+    state: present
+    key: http://download.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7
+- name: execute the nodejs repo script
+  shell: "curl --silent --location https://rpm.nodesource.com/setup_10.x | sudo bash -"
+- name: ensure yum installs nodejs
+  yum:
+    name: nodejs
+- name: ensure npx is installed using npm
+  npm:
+    name: npx
+    global: yes
+- name: ensure yarn is installed using npm
+  npm:
+    name: yarn
+    global: yes
+- name: ensure react application is copied to the react VM
+  copy:
+    src: "apps/react_application/"
+    dest: "/apps/react_application"
+- name: ensure the service is copied
+  copy:
+    src: "etc/systemd/system/"
+    dest: "/etc/systemd/system"
+- name: ensure systemctl daemon is reloaded
+  systemd:
+    daemon_reload: yes
+- name: ensure react application is started
+  systemd: 
+    name: react_application
+    state: started
+    enabled: yes
+- name: ensure port 5000 is permanently opened to tcp traffic
+  firewalld:
+    port: "5000/tcp"
+    permanent: true
+    state: enabled
+- name: restart firewalld
+  service:
+    name: firewalld
+    state: restarted
