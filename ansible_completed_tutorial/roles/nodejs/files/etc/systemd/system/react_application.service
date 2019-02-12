@@ -2,7 +2,7 @@
 Description=React application
 
 [Service]
-ExecStart=/usr/bin/npx serve -s /apps/react_application
+ExecStart=/usr/bin/npx serve -s -p 80 /apps/react_application
 Restart=on-failure
 User=root
 Group=root

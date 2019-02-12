@@ -37,9 +37,9 @@
     name: react_application
     state: started
     enabled: yes
-- name: ensure port 5000 is permanently opened to tcp traffic
+- name: ensure port 80 is permanently opened to tcp traffic
   firewalld:
-    port: "5000/tcp"
+    port: "80/tcp"
     permanent: true
     state: enabled
 - name: restart firewalld
